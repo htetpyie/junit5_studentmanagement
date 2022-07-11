@@ -39,7 +39,6 @@ public class Authentication {
 	  public String login(ModelMap model, @RequestParam("id") String id, @RequestParam("password") String password, HttpSession session) { 
 		  String current_date = now();
 		  if(id.isEmpty() || password.isEmpty()) {
-			  session.setAttribute("date", current_date); 
 			  model.addAttribute("error", "Fill the data! "); 
 			  return "LGN001"; 
 		  }
@@ -53,7 +52,8 @@ public class Authentication {
 					  );
 			  session.setAttribute("user", userBean); 
 			  session.setAttribute("isLogin","Okay");
-			  return "MNU001"; 
+			  session.setAttribute("date", current_date); 
+			  return "redirect:/showMenu"; 
 			  }
 		  model.addAttribute("error", "Please check your data again! "); 
 		  return "LGN001"; 

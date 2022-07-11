@@ -76,8 +76,8 @@ public class AuthenticationTest {
 	public void loginTestOkay() throws Exception {
 		when(service.selectUserByEmailAndPassword("email", "password")).thenReturn(new User(1,"name","email","password","role"));
 		this.mockMvc.perform(post("/Login").param("id","email").param("password", "password"))
-		.andExpect(status().isOk())
-		.andExpect(view().name("MNU001"));
+		.andExpect(status().is(302))
+		.andExpect(redirectedUrl("/showMenu"));
 	}
 	
 	@Test
