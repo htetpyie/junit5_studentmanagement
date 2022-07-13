@@ -93,16 +93,16 @@ public class StudentControllerTest {
 		.andExpect(view().name("STU003"));
 	}
 	
-	@Test
+ 	@Test
 	public void seeMoreTest() throws Exception {
 		Student student = new Student("STU001","Mg Mg", "dob", "gender", "phone", "Education","photo");
-		when(service.getById("STU001")).thenReturn(new Student());
 		Set<Course> courses = new HashSet<>();
 		Course c1 = new Course(1,"Java");
 		Course c2 = new Course(2,"Python");
 		courses.add(c1);
 		courses.add(c2);
 		student.setCourses(courses);	
+		when(service.getById("STU001")).thenReturn(student);
 		ArrayList<Course> list = new ArrayList<>();
 		for(Course c : courses) {
 			list.add(c);
@@ -120,11 +120,14 @@ public class StudentControllerTest {
 	
 	@Test
 	public void showStudentUpdateTest() throws Exception{
-		when(service.getById("STU001")).thenReturn(new Student());
+		Student student = new Student("STU001","Mg Mg", "dob", "gender", "phone", "Education","photo");
+		Set<Course> courses = new HashSet<>();
 		Course c1 = new Course(1,"Java");
-		Course c2 = new Course(2,"Python");	
-		ArrayList<Course> list = new ArrayList<>();
-		list.add(c1); list.add(c2);
+		Course c2 = new Course(2,"Python");
+		courses.add(c1);
+		courses.add(c2);
+		student.setCourses(courses);
+		when(service.getById("STU001")).thenReturn(student);
 		this.mockMvc.perform(get("/showStudentUpdate").param("id", "STU001"))
 		.andExpect(view().name("STU002-01"))
 		.andExpect(model().attributeExists("studentBean"));
